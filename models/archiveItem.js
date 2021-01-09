@@ -1,8 +1,8 @@
 module.exports = (sequelize, DataTypes) => {
   let ArchiveItem = sequelize.define("ArchiveItem", {
     name: DataTypes.STRING,
-    description: DataTypes.STRING,
-    imageUrl: DataTypes.STRING,
+    description: DataTypes.TEXT,
+    imageUrl: DataTypes.STRING(400),
     size: DataTypes.STRING,
     color: DataTypes.STRING,
     price: DataTypes.FLOAT,

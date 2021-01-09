@@ -14,12 +14,12 @@ module.exports = {
       },
       description: {
         allowNull: true,
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false,
       },
       imageUrl: {
         allowNull: true,
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(400),
         allowNull: false,
       },
       size: {

@@ -8,5 +8,5 @@ db = new Sequelize("postgres", usedEnv.username, usedEnv.password, {
   dialect: "postgres",
 });
 db.query(`CREATE DATABASE ${dbName} OWNER ${usedEnv.username}`)
-  .then(() => console.log(`Database: ${dbName} CREATED successful`))
-  .catch((err) => console.error(`Failed creating database: ${dbName}!\nReason: ${err}`));
+  .then(() => console.log(`---- DATABASE: ${dbName} CREATED SUCCESSFUL`))
+  .catch((err) => console.error(`---- FAILED CREATING DATABASE: ${dbName}! ----\nReason: ${err}`));

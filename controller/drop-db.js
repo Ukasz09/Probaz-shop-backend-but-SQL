@@ -8,5 +8,5 @@ db = new Sequelize("postgres", usedEnv.username, usedEnv.password, {
   dialect: "postgres",
 });
 db.query(`DROP DATABASE IF EXISTS ${dbName}`)
-  .then(() => console.log(`Database: ${dbName} DROPPED successful`))
-  .catch((err) => console.error(`Failed dropping database: ${dbName}!\nReason: ${err}`));
+  .then(() => console.log(`---- SUCCESSFUL DROPPED DATABASE: ${dbName} ----`))
+  .catch((err) => console.error(`---- FAILED DROPPING DATABASE: ${dbName}! ---- \nReason: ${err}`));

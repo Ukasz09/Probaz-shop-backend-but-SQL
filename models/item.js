@@ -11,10 +11,14 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Item.associate = function (models) {
-    Item.belongsTo(models.ArchiveItem, {
-      onDelete: "CASCADE",
+    Item.hasMany(models.ArchiveItem, {
+      allowNull: true,
+      type: Sequelize.INTEGER,
+      onDelete: "SET NULL",
+      onUpdate: "CASCADE",
       foreignKey: "itemId",
     });
+    ArchiveItem.belongsTo(models.Item);
   };
 
   return Item;

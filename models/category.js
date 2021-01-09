@@ -7,12 +7,21 @@ module.exports = (sequelize, DataTypes) => {
 };
 
 Category.associate = function (models) {
-  Category.belongsTo(models.ArchiveItem, {
-    onDelete: "CASCADE",
+  Category.hasMany(models.ArchiveItem, {
+    allowNull: true,
+    type: Sequelize.INTEGER,
+    onDelete: "SET NULL",
+    onUpdate: "CASCADE",
     foreignKey: "categoryId",
   });
-  Category.belongsTo(models.Item, {
-    onDelete: "CASCADE",
+  ArchiveItem.belongsTo(models.Category);
+
+  Category.hasMany(models.Item, {
+    allowNull: true,
+    type: Sequelize.INTEGER,
+    onDelete: "SET NULL",
+    onUpdate: "CASCADE",
     foreignKey: "categoryId",
   });
+  Item.belongsTo(models.Category);
 };

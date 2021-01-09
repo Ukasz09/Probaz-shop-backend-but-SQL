@@ -11,8 +11,13 @@ module.exports = (sequelize, DataTypes) => {
 };
 
 OrderHistory.associate = function (models) {
-  User.belongsTo(models.OrderHistory, {
-    onDelete: "CASCADE",
-    foreignKey: "userId",
+  User.belongsToMany(models.ArchiveItem, {
+    allowNull: false,
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    onDelete: "RESTRICT",
+    onUpdate: "CASCADE",
+    // foreignKey: "userId",
+    through: OrderHistory,
   });
 };

@@ -3,7 +3,7 @@ module.exports = {
     queryInterface.createTable("OrderHistory", {
       orderedQty: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       orderDate: {

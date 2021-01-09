@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const db = require("./config/database");
 
 db.authenticate()
-  .then(() => "Database connected")
+  .then(() => console.log("Database connected"))
   .catch((err) => console.log(`Error: ${err}`));
 
 const PORT = process.env.PORT || 5000;

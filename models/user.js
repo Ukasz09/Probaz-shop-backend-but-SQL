@@ -1,3 +1,5 @@
+//const { models } = require("../config/database");
+
 module.exports = (sequelize, DataTypes) => {
   let User = sequelize.define("User", {
     name: DataTypes.STRING,
@@ -6,18 +8,10 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     type: DataTypes.INTEGER,
     createdAt: DataTypes.DATE,
-  });
-  return User;
-};
+  }); 
 
-OrderHistory.associate = function (models) {
-  User.belongsToMany(models.ArchiveItem, {
-    allowNull: false,
-    type: Sequelize.INTEGER,
-    primaryKey: true,
-    onDelete: "RESTRICT",
-    onUpdate: "CASCADE",
-    // foreignKey: "userId",
-    through: OrderHistory,
-  });
+
+
+
+return User;
 };

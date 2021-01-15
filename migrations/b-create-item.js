@@ -13,19 +13,17 @@ module.exports = {
         allowNull: false,
       },
       description: {
-        allowNull: true,
         type: Sequelize.TEXT,
         allowNull: false,
       },
       imageUrl: {
-        allowNull: true,
         type: Sequelize.STRING(400),
         allowNull: false,
       },
       size: {
         allowNull: false,
         type: Sequelize.STRING,
-        allowNull: false,
+        
       },
       color: {
         allowNull: false,

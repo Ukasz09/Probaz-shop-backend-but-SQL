@@ -8,17 +8,20 @@ module.exports = (sequelize, DataTypes) => {
     price: DataTypes.FLOAT,
     starRating: DataTypes.FLOAT,
     availableQty: DataTypes.INTEGER,
+  },{
+    timestamps: false,
+    freezeTableName: true
   });
-
+  
   Item.associate = function (models) {
     Item.hasMany(models.ArchiveItem, {
       allowNull: true,
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       onDelete: "SET NULL",
       onUpdate: "CASCADE",
       foreignKey: "itemId",
     });
-    ArchiveItem.belongsTo(models.Item);
+    models.ArchiveItem.belongsTo(Item);
   };
 
   return Item;

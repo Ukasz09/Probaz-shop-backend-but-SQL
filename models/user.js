@@ -10,8 +10,5 @@ module.exports = (sequelize, DataTypes) => {
     createdAt: DataTypes.DATE,
   }); 
 
-
-
-
-return User;
+  return User;
 };

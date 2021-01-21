@@ -2,7 +2,7 @@ const db = require("../models");
 const Item = db.Item;
 const Category = db.Category;
 const Op = db.Sequelize.Op;
-var result;
+
 // Create and Save a new Item
 exports.create = (req, res) => {
 

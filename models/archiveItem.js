@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     description: DataTypes.TEXT,
     imageUrl: DataTypes.STRING(400),
-    size: DataTypes.STRING,
+    size: DataTypes.ENUM('XS','S', 'M','L','XL'),
     color: DataTypes.STRING,
     price: DataTypes.FLOAT,
     archiveDate: DataTypes.DATE,

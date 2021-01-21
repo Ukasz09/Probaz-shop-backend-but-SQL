@@ -2,7 +2,7 @@ const db = require("../models");
 const Item = db.Item;
 const Category = db.Category;
 const Op = db.Sequelize.Op;
-
+var result;
 // Create and Save a new Item
 exports.create = (req, res) => {
 
@@ -39,7 +39,7 @@ exports.create = (req, res) => {
 };
 
 //Find all items with filters
-exports.findAll = (req, res) => {
+exports.findAll = async(req, res) => {
 
     const { name, category, size, price_from, price_to, color, starRating, sort} = req.query;
     let query = {};
@@ -48,20 +48,9 @@ exports.findAll = (req, res) => {
       query.name = {[Op.like]: "%" + name + "%"}; //" { $regex: new RegExp(name_copy), $options: "i" };
     }
     
-    if(category){  
-      const categories = category.split(',');
-      Category.findAll({
-        attributes: ['id','name']
-      }).then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving categories. "
-        });
-      });;
-      query.categoryId = {[Op.in]:  category.split(',')};
+    if(category){        
+      var ids = await getCategoriesId(category);
+      query.categoryId = {[Op.in]:  ids};
     }
   
     if(size) {     
@@ -231,12 +220,13 @@ exports.update = (req, res) => {
             });
           });
       };
-      
+
 //get available categories
 exports.categories = (req, res) => {
-  
+    
     Category.findAll({
-        attributes: ['id','name']
+        attributes: ['id','name'],
+        raw: true
       }).then(data => {
         res.send(data);
       })
@@ -247,4 +237,27 @@ exports.categories = (req, res) => {
         });
       });
     }
+
+async function getCategoriesId(names) {
+
+  const categoryNames = names.split(',');  
+  var ids = [];
+
+  var data = await Category.findAll({
+        attributes: ['id','name'],
+        raw: true
+      });    
+  
+  for(let catName of categoryNames){   
+
+    let result = data.find( ({ name }) => name === catName );     
+    if(result != undefined)
+      ids.push(result.id);
+  }
+ 
+  return ids;
+}
+    
+        
+
   

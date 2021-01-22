@@ -16,7 +16,7 @@ Category.associate = function (models) {
     onUpdate: "CASCADE",
     foreignKey: "categoryId",
   });
-  models.ArchiveItem.belongsTo(models.Category);
+  models.ArchiveItem.belongsTo(models.Category, {foreignKey: "categoryId"});
 
   Category.hasMany(models.Item, {
     allowNull: true,

@@ -1,5 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
   let Item = sequelize.define("Item", {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
     name: DataTypes.STRING,
     description: DataTypes.TEXT,
     imageUrl: DataTypes.STRING(400),
@@ -21,8 +26,13 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: "CASCADE",
       foreignKey: "itemId",
     });
-    models.ArchiveItem.belongsTo(Item);
+    models.ArchiveItem.belongsTo(Item, {foreignKey: "itemId"});
   };
+
+  //Item.beforeCreate(item => item.id = uuid());
+  //Item.beforeCreate((item, _ ) => {
+   // return item.id = uuid();
+  //});
 
   return Item;
 };

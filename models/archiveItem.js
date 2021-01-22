@@ -6,8 +6,13 @@ module.exports = (sequelize, DataTypes) => {
     size: DataTypes.ENUM('XS','S', 'M','L','XL'),
     color: DataTypes.STRING,
     price: DataTypes.FLOAT,
-    archiveDate: DataTypes.DATE,
-  });
+    },
+    {   
+      freezeTableName: true,
+      timestamps: true,
+      updatedAt: false,
+    }
+  );
 
   ArchiveItem.associate = function (models) {
     ArchiveItem.belongsToMany(models.User, {

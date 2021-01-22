@@ -37,11 +37,6 @@ module.exports = {
         type: Sequelize.FLOAT,
         allowNull: false,
       },
-      archiveDate: {
-        allowNull: false,
-        allowNull: false,
-        type: Sequelize.DATE,
-      },
       itemId: {
         allowNull: true,
         type: Sequelize.INTEGER,
@@ -50,6 +45,7 @@ module.exports = {
         references: {
           model: "Item",
           key: "id",
+          as: "itemId",
         },
       },
       categoryId: {
@@ -60,8 +56,15 @@ module.exports = {
         references: {
           model: "Category",
           key: "id",
+          as: "categoryId",
         },
       },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('now')
+      },
+     
     }),
   down: (queryInterface /* , Sequelize */) => queryInterface.dropTable("ArchiveItem"),
 };

@@ -1,10 +1,13 @@
 const db = require("../models");
+const { sequelize } = require("sequelize");
+
 const Item = db.Item;
 const Category = db.Category;
+const ArchiveItem = db.ArchiveItem;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Item
-exports.create = (req, res) => {
+exports.create = async(req, res) => {
 
     if (!req.body.name) {
         res.status(400).send({ message: "Content can not be empty!" });
@@ -23,20 +26,38 @@ exports.create = (req, res) => {
         categoryId: req.body.category,
         availableQty: req.body.availableQty
     };
-
-    // Save Item in the database
+    
     Item.create(item)
         .then(data => {
-        res.send(data);
-        })
-        .catch(err => {
+            const archiveItem = {
+              name: req.body.name,
+              description: req.body.description,              
+              imageUrl: req.body.imageURL,
+              size: req.body.size,
+              color: req.body.color,
+              price: req.body.price,      
+              categoryId: req.body.category,
+              itemId: data.id
+            };
+            ArchiveItem.create(archiveItem)
+              .then(data => {
+              res.send(data);
+              })
+              .catch(err => {
+                    res.status(500).send({
+                    message:
+                    err.message  || "Some error occurred while creating the archiveItem."
+        });
+        });
+      })
+      .catch(err => {
         res.status(500).send({
-            message:
-            err.message  || "Some error occurred while creating the Item."
-        });
-        });
+        message:
+        err.message  || "Some error occurred while creating the Item."
+        })
+      });    
 
-};
+}
 
 //Find all items with filters
 exports.findAll = async(req, res) => {
@@ -164,7 +185,7 @@ exports.update = (req, res) => {
 
     const { name, description, category, size, color, starRating, price, availableQty, imageUrl } = req.body;
     let query = {};
-       
+
     if(name) {     
         query.name = req.body.name;
       }
@@ -201,25 +222,42 @@ exports.update = (req, res) => {
         query.imageUrl = req.body.imageUrl;
     }
 
-    const itemId = req.params.id;
-      
-    Item.update(
-            query,
-            { where: { id: itemId } }
-        )
-        .then(data => {
-            if (!data) {
-              res.status(404).send({
-                message: `Cannot update Item with id=${itemId}. Maybe Item was not found!`
-              });
-            } else res.send({ message: "Item was updated successfully." });
-          })
-          .catch(err => {
-            res.status(500).send({
-              message: "Error updating Item with id=" + itemId
-            });
-          });
-      };
+    Item.findOne({ 
+      where: {
+          id : req.params.id 
+        }
+        })
+        .then(function(item) {
+            
+            if(item)
+                {
+                   item.update(query).then(data => {
+                     console.log(data);
+                      const archiveItem = {
+                        name: data.name,
+                        description: data.description,              
+                        imageUrl: data.imageUrl,
+                        size: data.size,
+                        color: data.color,
+                        price: data.price,      
+                        categoryId: data.categoryId,
+                        itemId: data.id
+                    };
+                    ArchiveItem.create(archiveItem)
+                      .then(archiveData => {
+                        res.send(archiveData);
+                        })
+                      .catch(err => {
+                        res.status(500).send({
+                        message:
+                        err.message  || "Some error occurred while creating the archiveItem."
+                        });
+                      });
+                    });
+                  }
+              })
+
+  };
 
 //get available categories
 exports.categories = (req, res) => {

@@ -5,16 +5,16 @@ importData("Category", "category", `"id","name","icon"`).then(() =>
     importData(
       "Item",
       "items",
-      `"id","name","description","imageUrl","size","color","price","starRating","categoryId","availableQty"`
+      `"name","description","imageUrl","size","color","price","starRating","categoryId","availableQty"`
     ).then(() =>
-      importData(
-        "ArchiveItem",
-        "archiveItems",
-        `"id","name","description","imageUrl","size","color","price","categoryId","itemId","archiveDate"`
-      ).then(() => console.log("---- FINISHED DATA IMPORT ----"))
+      db.query(`INSERT INTO "ArchiveItem" ("name","description","imageUrl","size","color","price","categoryId","itemId")
+                SELECT "name","description","imageUrl","size","color","price","categoryId","id"
+                FROM "Item";`
+      ))
+      .then(() => console.log("---- FINISHED DATA IMPORT ----"))
     )
-  )
-);
+  );
+
 
 // -------------------------------------------------------------------------------
 function importData(tableName, csvFileNameNoExt, headersString) {

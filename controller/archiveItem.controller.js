@@ -17,7 +17,9 @@ exports.create = (req, res) => {
     color: req.body.color,
     pricePerItem: req.body.pricePerItem,
     orderedQty: req.body.orderedQty,
-    orderDate: req.body.orderDate,
+    categoryId: req.body.category,
+    archiveDate: req.body.archiveDate,
+    itemId: req.body.itemId,
   });
 
   // Save archived Item in the database

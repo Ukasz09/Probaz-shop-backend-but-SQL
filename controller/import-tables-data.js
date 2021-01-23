@@ -1,20 +1,16 @@
 const db = require("../config/database");
 
 importData("Category", "category", `"id","name","icon"`).then(() =>
-  importData("Users", "users", `"id","name","surname","email","password","type","createdAt"`).then(() =>
-    importData(
-      "Item",
-      "items",
-      `"name","description","imageUrl","size","color","price","starRating","categoryId","availableQty"`
-    ).then(() =>
-      db.query(`INSERT INTO "ArchiveItem" ("name","description","imageUrl","size","color","price","categoryId","itemId")
+  importData("Users", "users", `"name","surname","email","password","type","createdAt"`).then(() =>
+    importData("Item", "items", `"name","description","imageUrl","size","color","price","starRating","categoryId","availableQty"`)
+      .then(() =>
+        db.query(`INSERT INTO "ArchiveItem" ("name","description","imageUrl","size","color","price","categoryId","itemId")
                 SELECT "name","description","imageUrl","size","color","price","categoryId","id"
-                FROM "Item";`
-      ))
+                FROM "Item";`)
+      )
       .then(() => console.log("---- FINISHED DATA IMPORT ----"))
-    )
-  );
-
+  )
+);
 
 // -------------------------------------------------------------------------------
 function importData(tableName, csvFileNameNoExt, headersString) {

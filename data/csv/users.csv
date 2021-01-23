@@ -1,4 +1,4 @@
-id,name,surname,email,password,type,createdAt
-1,Januszek,Tester,koleiny@wp.pl,password,0,2021-01-09T11:39:19.683Z
-2,Aniae,Specialsik,spec@gmail.com,specjalny123,1,2020-11-29T19:33:49.730Z
-3,Łukasz,sad,sad@df.com,aaa123,0,2020-12-01T18:31:03.492Z
+name,surname,email,password,type,createdAt
+Januszek,Tester,koleiny@wp.pl,password,0,2021-01-09T11:39:19.683Z
+Ania,Specialsik,spec@gmail.com,specjalny123,1,2020-11-29T19:33:49.730Z
+Łukasz,sad,sad@df.com,aaa123,0,2020-12-01T18:31:03.492Z

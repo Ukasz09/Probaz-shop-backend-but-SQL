@@ -2,10 +2,9 @@ module.exports = {
   up: (queryInterface, Sequelize) =>
     queryInterface.createTable("ArchiveItem", {
       id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
         type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
       },
       name: {
         allowNull: false,
@@ -62,9 +61,8 @@ module.exports = {
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn('now')
+        defaultValue: Sequelize.fn("now"),
       },
-     
     }),
   down: (queryInterface /* , Sequelize */) => queryInterface.dropTable("ArchiveItem"),
 };

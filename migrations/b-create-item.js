@@ -4,7 +4,7 @@ module.exports = {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
       },
       name: {
         allowNull: false,
@@ -22,7 +22,6 @@ module.exports = {
       size: {
         allowNull: false,
         type: Sequelize.STRING,
-        
       },
       color: {
         allowNull: false,

@@ -1,5 +1,6 @@
 const db = require("../models");
 const ArchiveItem = db.archiveItem;
+const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
   // Validate request

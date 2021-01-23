@@ -22,7 +22,7 @@ module.exports = app => {
   
     app.use('/api/users', router);
 
-    // Get orderedItems by user_id
+    // Get archivedItems by user_id
     app.get('/api/history/:id', users.historyid);
 
     // Logon user

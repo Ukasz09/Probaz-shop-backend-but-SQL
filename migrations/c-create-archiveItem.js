@@ -5,6 +5,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
+        allowNull: false
       },
       name: {
         allowNull: false,
@@ -23,7 +24,7 @@ module.exports = {
       },
       size: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.ENUM('XS','S', 'M','L','XL'),
         allowNull: false,
       },
       color: {

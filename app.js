@@ -14,7 +14,6 @@ db.authenticate()
   .then(() => console.log("Database connected"))
   .catch((err) => console.err(`Database NOT connected!\nReason: ${err}`));
 
-
 require("./routes/item.routes.js")(app);
 
 const PORT = process.env.PORT || 5000;

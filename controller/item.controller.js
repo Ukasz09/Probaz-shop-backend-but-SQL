@@ -61,7 +61,8 @@ exports.findAll = async (req, res) => {
   let query = {};
 
   if (name) {
-    query.name = { [Op.like]: "%" + name + "%" }; //" { $regex: new RegExp(name_copy), $options: "i" };
+    // query.name = { [Op.like]: "%" + name + "%" };
+    query.name = { [Op.iRegexp]: name };
   }
 
   if (category) {
@@ -70,7 +71,6 @@ exports.findAll = async (req, res) => {
   }
 
   if (size) {
-    const sizes = size.split(",");
     query.size = { [Op.in]: size.split(",") };
   }
 
@@ -125,7 +125,7 @@ exports.findOne = (req, res) => {
 
   Item.findOne({ where: { id: itemId } })
     .then((data) => {
-      if (!data) res.status(404).send({ message: "Not found Item with id " + id });
+      if (!data) res.status(404).send({ message: "Not found Item with id " + itemId });
       else res.send(data);
     })
     .catch((err) => {
@@ -214,7 +214,6 @@ exports.update = (req, res) => {
   }).then(function (item) {
     if (item) {
       item.update(query).then((data) => {
-        console.log(data);
         const archiveItem = {
           name: data.name,
           description: data.description,

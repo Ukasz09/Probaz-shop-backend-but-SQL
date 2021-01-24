@@ -14,7 +14,6 @@ db.authenticate()
   .then(() => console.log("Database connected"))
   .catch((err) => console.err(`Database NOT connected!\nReason: ${err}`));
 
-
 require("./routes/item.routes.js")(app);
 require("./routes/user.routes.js")(app);
 

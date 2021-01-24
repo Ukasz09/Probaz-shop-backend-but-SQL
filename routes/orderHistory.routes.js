@@ -1,17 +1,24 @@
 module.exports = (app) => {
-    const orderHistory = require("../controllers/orderHistory.controller.js");
-    var router = require("express").Router();
-  
-    router.post("/", orderHistory.create);
+  const orderHistory = require("../controller/orderHistory.controller.js");
+  var router = require("express").Router();
 
-    // Retrieve all orderHistory
-    router.get("/", orderHistory.findAll);
-    
-    // Update a orderHistory with id
-    router.put("/:id", orderHistory.update);
-    
-    app.get('/api/dates', orderHistory.dates);
+  // Create a new orderHistory
+  router.post("/", orderHistory.create);
 
-    app.use("/api/orderHistory", router);
-  };
-  
+  // Retrieve all orderHistory
+  router.get("/", orderHistory.findAll);
+
+  // Retrieve a single orderHistory with id
+  router.get("/:id", orderHistory.findOne);
+
+  // Update a orderHistory with id
+  router.put("/:id", orderHistory.update);
+
+  // Delete a orderHistory with id
+  router.delete("/:id", orderHistory.delete);
+
+  // Delete all orderHistory
+  router.delete("/", orderHistory.deleteAll);
+
+  app.use("/api/orderHistory", router);
+};

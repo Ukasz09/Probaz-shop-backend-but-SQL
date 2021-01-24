@@ -16,6 +16,8 @@ db.authenticate()
 
 
 require("./routes/item.routes.js")(app);
+require("./routes/user.routes.js")(app);
+
 
 const PORT = process.env.PORT || 5000;
 

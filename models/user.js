@@ -27,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: "CASCADE",
       foreignKey: "itemId",
     });
+    models.OrderHistory.belongsTo(User, {foreignKey: "userId"});
   };
 
   return User;

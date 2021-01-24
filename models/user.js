@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       surname: DataTypes.STRING,
       email: DataTypes.STRING,
       password: DataTypes.STRING,
-      type: DataTypes.INTEGER,
+      type: DataTypes.ENUM("CLIENT", "EMPLOYEE"),
       createdAt: DataTypes.DATE,
     },
     {

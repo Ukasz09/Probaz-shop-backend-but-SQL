@@ -17,17 +17,10 @@ exports.create = async (req, res) => {
     email: req.body.email,
     password: req.body.password,
     type: req.body.type,
-    createdAt: req.body.createdAt,
   };
-
   User.create(user)
     .then((data) => {
       res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Some error occurred while creating the User.",
-      });
     })
     .catch((err) => {
       res.status(500).send({

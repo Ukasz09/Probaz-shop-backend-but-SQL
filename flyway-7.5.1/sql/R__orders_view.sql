@@ -13,5 +13,5 @@ SELECT
     AI.size
 FROM
     "OrderHistory"
-    INNER JOIN "Users" AS U ON U.id = "userId"
+    INNER JOIN "User" AS U ON U.id = "userId"
     INNER JOIN "ArchiveItem" AS AI ON AI.id = "archiveId"

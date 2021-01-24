@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       onDelete: "RESTRICT",
       onUpdate: "CASCADE",
-      // foreignKey: "userId",
+      foreignKey: "userId",
       through: OrderHistory,
     });
   };

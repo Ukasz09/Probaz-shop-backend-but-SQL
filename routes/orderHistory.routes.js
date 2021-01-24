@@ -6,19 +6,19 @@ module.exports = (app) => {
   router.post("/", orderHistory.create);
 
   // Retrieve all orderHistory
-  router.get("/", orderHistory.findAll);
+  //router.get("/", orderHistory.findAll);
 
   // Retrieve a single orderHistory with id
-  router.get("/:id", orderHistory.findOne);
+  //router.get("/:id", orderHistory.findOne);
 
   // Update a orderHistory with id
-  router.put("/:id", orderHistory.update);
+  //router.put("/:id", orderHistory.update);
 
   // Delete a orderHistory with id
-  router.delete("/:id", orderHistory.delete);
+  //router.delete("/:id", orderHistory.delete);
 
   // Delete all orderHistory
-  router.delete("/", orderHistory.deleteAll);
+  //router.delete("/", orderHistory.deleteAll);
 
   app.use("/api/orderHistory", router);
 };

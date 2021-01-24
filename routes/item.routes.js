@@ -1,4 +1,4 @@
-module.exports = app => {
+module.exports = (app) => {
   const items = require("../controller/item.controller.js");
 
   var router = require("express").Router();
@@ -14,8 +14,8 @@ module.exports = app => {
   // Delete a Item with id
   router.delete("/:id", items.delete);
 
-  app.use('/api/items', router);
+  app.use("/api/items", router);
 
   // Get available categories
-  app.get('/api/categories', items.categories);
+  app.get("/api/categories", items.categories);
 };

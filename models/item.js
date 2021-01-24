@@ -1,23 +1,27 @@
 module.exports = (sequelize, DataTypes) => {
-  let Item = sequelize.define("Item", {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
+  let Item = sequelize.define(
+    "Item",
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      name: DataTypes.STRING,
+      description: DataTypes.TEXT,
+      imageUrl: DataTypes.STRING(400),
+      size: DataTypes.ENUM("XS", "S", "M", "L", "XL"),
+      color: DataTypes.STRING,
+      price: DataTypes.FLOAT,
+      starRating: DataTypes.FLOAT,
+      availableQty: DataTypes.INTEGER,
     },
-    name: DataTypes.STRING,
-    description: DataTypes.TEXT,
-    imageUrl: DataTypes.STRING(400),
-    size: DataTypes.ENUM('XS','S', 'M','L','XL'),
-    color: DataTypes.STRING,
-    price: DataTypes.FLOAT,
-    starRating: DataTypes.FLOAT,
-    availableQty: DataTypes.INTEGER,
-  },{
-    timestamps: false,
-    freezeTableName: true
-  });
-  
+    {
+      timestamps: false,
+      freezeTableName: true,
+    }
+  );
+
   Item.associate = function (models) {
     Item.hasMany(models.ArchiveItem, {
       allowNull: true,
@@ -26,12 +30,12 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: "CASCADE",
       foreignKey: "itemId",
     });
-    models.ArchiveItem.belongsTo(Item, {foreignKey: "itemId"});
+    models.ArchiveItem.belongsTo(Item, { foreignKey: "itemId" });
   };
 
   //Item.beforeCreate(item => item.id = uuid());
   //Item.beforeCreate((item, _ ) => {
-   // return item.id = uuid();
+  // return item.id = uuid();
   //});
 
   return Item;

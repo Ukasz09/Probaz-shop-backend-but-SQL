@@ -1,4 +1,4 @@
-module.exports = app => {
+module.exports = (app) => {
   const users = require("../controller/user.controller.js");
   var router = require("express").Router();
 
@@ -20,7 +20,7 @@ module.exports = app => {
   // Delete all Users
   //router.delete("/", users.deleteAll);
 
-  app.use('/api/users', router);
+  app.use("/api/users", router);
 
   // Get orderHistory by user_id
   //app.get('/api/history/:id', users.historyid);

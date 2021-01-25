@@ -1,19 +1,13 @@
 const db = require("../models");
-const { sequelize } = require("sequelize");
-const archiveItem = require("../models/archiveItem");
-
+const user = require("../models/user");
 const User = db.User;
 const OrderHistory = db.OrderHistory;
 const ArchiveItem = db.ArchiveItem;
 
-// Create and Save a new User
 exports.create = async (req, res) => {
   if (!req.body.name) {
     res.status(400).send({ message: "Content can not be empty!" });
-    return;
   }
-
-  // Create an User
   const user = {
     name: req.body.name,
     surname: req.body.surname,
@@ -32,19 +26,7 @@ exports.create = async (req, res) => {
     });
 };
 
-// Find an single User with an id
-exports.findOne = (req, res) => {
-  const userId = req.params.id;
-
-  User.findOne({ where: { id: userId } })
-    .then((data) => {
-      if (!data) res.status(404).send({ message: "Not found Item with " });
-      else res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({ message: "Error retrieving Item with id=" });
-    });
-};
+// Changed approach - model without history
 exports.findAll = async (req, res) => {
   User.findAll()
     .then((data) => {
@@ -57,7 +39,6 @@ exports.findAll = async (req, res) => {
     });
 };
 
-/* ---------------------------------------- ---------------------------------------- */
 exports.login = (req, res) => {
   const email = req.query.email;
   const password = req.query.password;
@@ -114,5 +95,30 @@ exports.history = (req, res) => {
     .catch((err) => {
       console.log(err);
       res.status(500).send({ message: err.message || "Some error occurred while retrieving categories. " });
+    });
+};
+
+exports.delete = (req, res) => {
+  const userId = req.params.id;
+  User.destroy({
+    where: {
+      id: userId,
+    },
+  })
+    .then((data) => {
+      if (!data) {
+        res.status(404).send({
+          message: `Not found User with id=${userId}`,
+        });
+      } else {
+        res.send({
+          message: "User was deleted successfully!",
+        });
+      }
+    })
+    .catch((_) => {
+      res.status(500).send({
+        message: "Could not delete User with id=" + id,
+      });
     });
 };

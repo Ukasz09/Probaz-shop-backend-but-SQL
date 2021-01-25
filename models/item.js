@@ -32,11 +32,5 @@ module.exports = (sequelize, DataTypes) => {
     });
     models.ArchiveItem.belongsTo(Item, { foreignKey: "itemId" });
   };
-
-  //Item.beforeCreate(item => item.id = uuid());
-  //Item.beforeCreate((item, _ ) => {
-  // return item.id = uuid();
-  //});
-
   return Item;
 };

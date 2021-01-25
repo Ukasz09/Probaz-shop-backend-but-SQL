@@ -1,3 +1,5 @@
+const user = require("../models/user.js");
+
 module.exports = (app) => {
   const users = require("../controller/user.controller.js");
   var router = require("express").Router();
@@ -14,4 +16,6 @@ module.exports = (app) => {
   app.get("/api/history/:id", users.history);
 
   app.get("/api/login", users.login);
+
+  app.post("/api/order", users.order);
 };

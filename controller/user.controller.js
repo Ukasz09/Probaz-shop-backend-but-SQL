@@ -1,4 +1,5 @@
 const db = require("../models");
+const orderHistory = require("../models/orderHistory");
 const user = require("../models/user");
 const User = db.User;
 const OrderHistory = db.OrderHistory;
@@ -24,6 +25,62 @@ exports.create = async (req, res) => {
         message: err.message || "Some error occurred while creating the User.",
       });
     });
+};
+
+exports.order = async (req, res) => {
+  let userId = req.query.userId;
+  userId = +userId;
+  if (!req.body) {
+    res.status(400).send({ message: "Content can not be empty!" });
+    return;
+  }
+  const orderedQtyArr = [];
+  const archiveItemsId = req.body.map((orderBody) => {
+    const order = {
+      id: orderBody.id,
+      name: orderBody.name,
+      description: orderBody.description,
+      imageUrl: orderBody.imageUrl,
+      size: orderBody.size,
+      color: orderBody.color,
+      pricePerItem: orderBody.pricePerItem,
+      orderedQty: orderBody.orderedQty,
+      orderDate: orderBody.orderDate,
+    };
+    orderedQtyArr.push(order.orderedQty);
+    return ArchiveItem.findAll({
+      attributes: ["createdAt", "id"],
+      where: { itemId: order.id },
+      raw: true,
+    });
+  });
+  Promise.all(archiveItemsId).then((data) => {
+    let index = 0;
+    for (const arrOfArchItemsArr of data) {
+      arrOfArchItemsArr.sort((fst, snd) => fst.orderDate > snd.orderDate);
+      const lastUpdatedArchiveItem = arrOfArchItemsArr[0];
+      const orderHistoryObj = {
+        userId: userId,
+        archiveId: lastUpdatedArchiveItem.id,
+        orderedQty: orderedQtyArr[index],
+        orderDate: new Date(),
+      };
+      index++;
+      OrderHistory.create(orderHistoryObj)
+        .then((data) => {
+          // res.send(data); //TODO:
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message: err.message || "Some error occurred while prodecing transaction.",
+          });
+        });
+    }
+    res.send({ message: "Correct updated" }); //TODO: change to promise and send when correct response
+  });
+  // .catch((e) => {
+  //   res.status(500).send(e);
+  // });
 };
 
 // Changed approach - history fetched as separated route

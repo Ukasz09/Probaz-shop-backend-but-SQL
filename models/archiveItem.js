@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
-      // foreignKey: "archiveId",
+      foreignKey: "archiveId",
       through: models.OrderHistory,
     });
   };

@@ -22,16 +22,16 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  User.associate = function (models) {
-    User.hasMany(models.OrderHistory, {
-      allowNull: true,
-      type: DataTypes.INTEGER,
-      onDelete: "SET NULL",
-      onUpdate: "CASCADE",
-      foreignKey: "itemId",
-    });
-    models.OrderHistory.belongsTo(User, { foreignKey: "userId" });
-  };
+  // User.associate = function (models) {
+  //   User.hasMany(models.OrderHistory, {
+  //     allowNull: true,
+  //     type: DataTypes.INTEGER,
+  //     onDelete: "SET NULL",
+  //     onUpdate: "CASCADE",
+  //     foreignKey: "itemId",
+  //   });
+  //   models.OrderHistory.belongsTo(User, { foreignKey: "userId" });
+  // };
 
   return User;
 };

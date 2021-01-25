@@ -26,7 +26,7 @@ exports.create = async (req, res) => {
     });
 };
 
-// Changed approach - model without history
+// Changed approach - history fetched as separated route
 exports.findAll = async (req, res) => {
   User.findAll()
     .then((data) => {
@@ -39,6 +39,7 @@ exports.findAll = async (req, res) => {
     });
 };
 
+// Changed approach - history fetched as separated route
 exports.login = (req, res) => {
   const email = req.query.email;
   const password = req.query.password;

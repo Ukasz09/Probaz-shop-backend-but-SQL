@@ -57,13 +57,17 @@ exports.order = async (req, res) => {
   Promise.all(archiveItemsId).then((data) => {
     let index = 0;
     for (const arrOfArchItemsArr of data) {
-      arrOfArchItemsArr.sort((fst, snd) => fst.orderDate > snd.orderDate);
-      const lastUpdatedArchiveItem = arrOfArchItemsArr[0];
+      const sorted = arrOfArchItemsArr.sort(function (a, b) {
+        const dateA = Date.parse(new String(a.createdAt));
+        const dateB = Date.parse(new String(b.createdAt));
+        return dateB - dateA;
+      });
+      const lastUpdatedArchiveItem = sorted[0];
       const orderHistoryObj = {
         userId: userId,
         archiveId: lastUpdatedArchiveItem.id,
         orderedQty: orderedQtyArr[index],
-        orderDate: new Date(),
+        orderDate: createDateAsUTC(new Date()),
       };
       index++;
       OrderHistory.create(orderHistoryObj)
@@ -180,3 +184,9 @@ exports.delete = (req, res) => {
       });
     });
 };
+
+function createDateAsUTC(date) {
+  return new Date(
+    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds())
+  );
+}

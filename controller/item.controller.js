@@ -223,6 +223,7 @@ exports.update = (req, res) => {
           price: data.price,
           categoryId: data.categoryId,
           itemId: data.id,
+          createdAt: createDateAsUTC(new Date()), // To avoid incorrect time zone parsing
         };
         ArchiveItem.create(archiveItem)
           .then((archiveData) => {
@@ -270,4 +271,10 @@ async function getCategoriesId(names) {
   }
 
   return ids;
+}
+
+function createDateAsUTC(date) {
+  return new Date(
+    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds())
+  );
 }

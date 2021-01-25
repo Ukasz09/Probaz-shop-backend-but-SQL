@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS "OrderHistory" (
     "orderedQty" int NOT NULL,
-    "orderDate" timestamp with time zone NOT NULL,
+    "orderDate" timestamp NOT NULL,
     "userId" int NOT NULL,
     "archiveId" int NOT NULL,
     PRIMARY KEY ("userId", "orderDate", "archiveId"),

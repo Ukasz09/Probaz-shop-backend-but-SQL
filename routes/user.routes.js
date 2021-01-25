@@ -23,8 +23,8 @@ module.exports = (app) => {
   app.use("/api/users", router);
 
   // Get orderHistory by user_id
-  //app.get('/api/history/:id', users.historyid);
+  app.get("/api/history/:id", users.history);
 
   // Logon user
-  //app.get('/api/login', users.login);
+  app.get("/api/login", users.login);
 };

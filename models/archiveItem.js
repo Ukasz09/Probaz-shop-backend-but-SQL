@@ -2,6 +2,11 @@ module.exports = (sequelize, DataTypes) => {
   let ArchiveItem = sequelize.define(
     "ArchiveItem",
     {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
       name: DataTypes.STRING,
       description: DataTypes.TEXT,
       imageUrl: DataTypes.STRING(400),

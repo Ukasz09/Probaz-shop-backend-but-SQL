@@ -85,11 +85,14 @@ exports.history = (req, res) => {
       if (!data) {
         res.send([]);
       } else {
+        qtyDateArr = [];
         const tmp = data.map((element) => {
+          qtyDateArr.push([element.orderedQty, element.orderDate]);
           return ArchiveItem.findOne({ where: { id: element.archiveId } });
         });
         Promise.all(tmp).then((tmpData) => {
           result = [];
+          let index = 0;
           for (const archiveItem of tmpData) {
             result.push({
               id: archiveItem.id,
@@ -99,71 +102,17 @@ exports.history = (req, res) => {
               size: archiveItem.size,
               color: archiveItem.color,
               pricePerItem: archiveItem.price,
-              // orderedQty: historyElem.orderedQty,
-              // orderDate: historyElem.orderDate,
-              orderedQty: 2,
-              orderDate: new Date(),
+              orderedQty: qtyDateArr[index][0],
+              orderDate: qtyDateArr[index][1],
             });
+            index++;
           }
           res.send(result);
         });
       }
-
-      // .then((result) => res.send(result))
-      // .catch((err) => res.status(500).send({ message: err.message || "Some error occurred while retrieving categories. " }));
     })
     .catch((err) => {
       console.log(err);
       res.status(500).send({ message: err.message || "Some error occurred while retrieving categories. " });
     });
-
-  // public id: string | number,
-  // public name: string,
-  // public description: string,
-  // public imageUrl: string,
-  // public size: string,
-  // public color: string,
-  // public pricePerItem: number,
-  // public orderedQty: number,
-  // public orderDate: Date
 };
-
-function getOrderedItem() {
-  result.push({
-    id: archiveItem.id,
-    name: archiveItem.name,
-    description: archiveItem.description,
-    imageUrl: archiveItem.imageUrl,
-    size: archiveItem.size,
-    color: archiveItem.color,
-    pricePerItem: archiveItem.price,
-    orderedQty: historyElem.orderedQty,
-    orderDate: historyElem.orderDate,
-  });
-}
-
-// async function getArchiveItem(archiveItemId) {
-//   let archiveItem = await ArchiveItem.findOne({ where: { id: archiveItemId } });
-//   return archiveItem;
-// }
-
-async function getOrderedItems(historyData, res) {
-  result = [];
-  for (const historyElem of historyData) {
-    let archiveItem = await ArchiveItem.findOne({ where: { id: historyElem.archiveId } });
-    await result.push(
-      new {
-        id: archiveItem.id,
-        name: archiveItem.name,
-        description: archiveItem.description,
-        imageUrl: archiveItem.imageUrl,
-        size: archiveItem.size,
-        color: archiveItem.color,
-        pricePerItem: archiveItem.price,
-        orderedQty: historyElem.orderedQty,
-        orderDate: historyElem.orderDate,
-      }()
-    );
-  }
-  res.send(result);
-}

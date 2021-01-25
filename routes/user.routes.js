@@ -6,10 +6,10 @@ module.exports = (app) => {
   router.post("/", users.create);
 
   // Retrieve all Users
-  router.get("/", users.findAll);
+  router.get("/", users.findAll); //TODO:
 
   // Retrieve a single User with id
-  router.get("/:id", users.findOne);
+  router.get("/:id", users.findOne); //TODO:
 
   // Update a whole User with id
   //router.put("/:id", users.update);
